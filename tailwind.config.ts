@@ -62,6 +62,18 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				graph: {
+					blue: '#3b82f6',
+					green: '#10b981',
+					purple: '#8B5CF6',
+					orange: '#f59e0b',
+					red: '#ef4444',
+					pink: '#ec4899',
+					indigo: '#6366f1',
+					cyan: '#06b6d4',
+					lime: '#84cc16',
+          vibrant: '#1EAEDB'
 				}
 			},
 			fontFamily: {
@@ -88,11 +100,31 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+        'pulse': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'bounce-soft': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-5%)' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-in': 'fade-in 0.5s ease-in',
+        'bounce-soft': 'bounce-soft 2s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
 			}
 		}
 	},
