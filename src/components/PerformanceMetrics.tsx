@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -426,7 +425,7 @@ const PerformanceMetrics = ({ metricsData }: PerformanceMetricsProps) => {
                           backgroundColor: 'hsl(var(--card))', 
                           borderColor: 'hsl(var(--border))' 
                         }}
-                        formatter={(value) => [`${value} Mbps`, `${entry.name}`]}
+                        formatter={(value, name) => [`${value} Mbps`, name]}
                       />
                       <Legend />
                     </PieChart>
