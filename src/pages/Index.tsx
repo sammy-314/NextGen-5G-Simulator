@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { 
   generateNetworkTopology, 
@@ -27,10 +26,8 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("topology");
   
-  // Handle simulation start/stop
   const handleStartStop = () => {
     if (isRunning) {
-      // Stop simulation
       if (simulationInterval) {
         clearInterval(simulationInterval);
         setSimulationInterval(null);
@@ -41,22 +38,19 @@ const Index = () => {
         description: "The simulation has been stopped successfully."
       });
     } else {
-      // Start simulation
       setIsLoading(true);
       
-      // Generate initial data based on current parameters
       setTimeout(() => {
         const newNetwork = generateNetworkTopology();
         setNetwork(newNetwork);
         setMetricsData(generateMetricsData(60, 5));
         
-        // Set up interval for continuous updates
         const interval = setInterval(() => {
           setNetwork(prevNetwork => simulateNetworkUpdate(prevNetwork, parameters));
           setMetricsData(prevData => {
             const lastTimestamp = prevData[prevData.length - 1].timestamp;
             const newDataPoint = {
-              timestamp: lastTimestamp + 5000, // 5 seconds after
+              timestamp: lastTimestamp + 5000,
               throughput: prevData[prevData.length - 1].throughput * (0.95 + Math.random() * 0.1),
               latency: prevData[prevData.length - 1].latency * (0.95 + Math.random() * 0.1),
               packetLoss: Math.max(0, prevData[prevData.length - 1].packetLoss * (0.95 + Math.random() * 0.1)),
@@ -81,19 +75,14 @@ const Index = () => {
     }
   };
   
-  // Handle simulation reset
   const handleReset = () => {
-    // Stop any running simulation
     if (simulationInterval) {
       clearInterval(simulationInterval);
       setSimulationInterval(null);
     }
     setIsRunning(false);
     
-    // Reset parameters to defaults
     setParameters(defaultSimulationParameters);
-    
-    // Generate new initial data
     setNetwork(generateNetworkTopology());
     setMetricsData(generateMetricsData(60, 5));
     
@@ -103,7 +92,6 @@ const Index = () => {
     });
   };
   
-  // Clean up interval on component unmount
   useEffect(() => {
     return () => {
       if (simulationInterval) {
@@ -112,7 +100,6 @@ const Index = () => {
     };
   }, [simulationInterval]);
   
-  // Calculate simulation results
   const simulationResults = generateSimulationResults(parameters, metricsData);
   
   return (
@@ -122,7 +109,6 @@ const Index = () => {
       <main className="flex-1 container mx-auto py-6 px-4">
         <h1 className="text-3xl font-bold mb-6">5G Network Simulation Dashboard</h1>
         
-        {/* Mobile tabs for responsive layout */}
         <div className="block md:hidden mb-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="w-full">
@@ -167,7 +153,6 @@ const Index = () => {
           </Tabs>
         </div>
         
-        {/* Desktop layout */}
         <div className="hidden md:block">
           <div className="grid grid-cols-3 gap-6">
             <NetworkTopology 
