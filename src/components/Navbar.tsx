@@ -1,5 +1,21 @@
 
-import { Menu, WifiIcon, Zap, Activity, Settings, Share2, Bell, ChevronDown } from "lucide-react";
+import React, { useState } from "react";
+import { 
+  Menu, 
+  WifiIcon, 
+  Zap, 
+  Activity, 
+  Settings, 
+  Share2, 
+  Bell, 
+  ChevronDown, 
+  BarChart3, 
+  Cpu, 
+  Network,
+  Layers,
+  HelpCircle
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,13 +26,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [notifications, setNotifications] = useState(3);
   
+  const clearNotifications = () => {
+    setNotifications(0);
+  };
+  
   return (
-    <nav className="w-full bg-sidebar p-2 md:px-4 md:py-3 flex items-center gap-4 shadow-md">
+    <nav className="w-full bg-sidebar p-2 md:px-4 md:py-3 flex items-center gap-4 shadow-md sticky top-0 z-50">
       <div className="flex items-center gap-2 flex-1">
         <Button variant="ghost" size="icon" className="text-white">
           <Menu className="h-5 w-5" />
@@ -30,6 +60,134 @@ const Navbar = () => {
             5G Network <span className="text-accent font-extrabold">Simulator</span>
           </h1>
         </div>
+      </div>
+      
+      {/* Navigation Menu - Visible on medium screens and up */}
+      <div className="hidden md:flex">
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="bg-transparent text-white hover:bg-sidebar-accent">Dashboard</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-indigo-500 to-accent p-6 no-underline outline-none focus:shadow-md"
+                        href="/"
+                      >
+                        <Network className="h-6 w-6 text-white" />
+                        <div className="mt-4 mb-2 text-lg font-medium text-white">
+                          Network Simulator
+                        </div>
+                        <p className="text-sm leading-tight text-white/90">
+                          Advanced 5G network simulation platform with real-time metrics and visualization
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        href="/"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent/10 focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none flex items-center gap-2">
+                          <BarChart3 className="h-4 w-4" /> Performance Metrics
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Detailed charts and analytics for network performance
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        href="/"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent/10 focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none flex items-center gap-2">
+                          <Cpu className="h-4 w-4" /> Simulation Controls
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Configure and manage network simulation parameters
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <li>
+                    <NavigationMenuLink asChild>
+                      <a
+                        href="/"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent/10 focus:text-accent-foreground"
+                      >
+                        <div className="text-sm font-medium leading-none flex items-center gap-2">
+                          <Layers className="h-4 w-4" /> Network Topology
+                        </div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Interactive visualization of network architecture
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="bg-transparent text-white hover:bg-sidebar-accent">Documentation</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  {[
+                    {
+                      title: "Introduction",
+                      href: "/",
+                      description:
+                        "A comprehensive introduction to 5G network simulation"
+                    },
+                    {
+                      title: "API Reference",
+                      href: "/",
+                      description:
+                        "Detailed API documentation for simulation parameters"
+                    },
+                    {
+                      title: "Examples",
+                      href: "/",
+                      description:
+                        "Learn from practical simulation examples and use cases"
+                    },
+                    {
+                      title: "Advanced Usage",
+                      href: "/",
+                      description:
+                        "Advanced techniques for complex network modeling"
+                    }
+                  ].map((item) => (
+                    <li key={item.title}>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href={item.href}
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground focus:bg-accent/10 focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">{item.title}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                            {item.description}
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/" className={cn(navigationMenuTriggerStyle(), "bg-transparent text-white hover:bg-sidebar-accent")}>
+                Resources
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
       
       <div className="flex items-center gap-3">
@@ -50,26 +208,41 @@ const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64">
-            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+            <DropdownMenuLabel className="flex justify-between items-center">
+              Notifications
+              {notifications > 0 && (
+                <Button variant="ghost" size="sm" onClick={clearNotifications} className="h-7 text-xs">
+                  Clear all
+                </Button>
+              )}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
-              <div className="flex flex-col space-y-1">
-                <span className="font-medium text-sm">Simulation Complete</span>
-                <span className="text-xs text-muted-foreground">Your simulation results are ready to view.</span>
+            {notifications > 0 ? (
+              <>
+                <DropdownMenuItem className="cursor-pointer">
+                  <div className="flex flex-col space-y-1">
+                    <span className="font-medium text-sm">Simulation Complete</span>
+                    <span className="text-xs text-muted-foreground">Your simulation results are ready to view.</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <div className="flex flex-col space-y-1">
+                    <span className="font-medium text-sm">Network Alert</span>
+                    <span className="text-xs text-muted-foreground">High interference detected in Node 3.</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <div className="flex flex-col space-y-1">
+                    <span className="font-medium text-sm">New Update Available</span>
+                    <span className="text-xs text-muted-foreground">Version 2.1 with new models is available.</span>
+                  </div>
+                </DropdownMenuItem>
+              </>
+            ) : (
+              <div className="py-4 text-center text-muted-foreground text-sm">
+                No new notifications
               </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <div className="flex flex-col space-y-1">
-                <span className="font-medium text-sm">Network Alert</span>
-                <span className="text-xs text-muted-foreground">High interference detected in Node 3.</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <div className="flex flex-col space-y-1">
-                <span className="font-medium text-sm">New Update Available</span>
-                <span className="text-xs text-muted-foreground">Version 2.1 with new models is available.</span>
-              </div>
-            </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
         
@@ -98,9 +271,24 @@ const Navbar = () => {
           <DropdownMenuContent className="w-56" align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Saved Simulations</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex items-center gap-2">
+                <Layers className="h-4 w-4" />
+                <span>Profile</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex items-center gap-2">
+                <HelpCircle className="h-4 w-4" />
+                <span>Saved Simulations</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </div>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Log out</DropdownMenuItem>
           </DropdownMenuContent>
