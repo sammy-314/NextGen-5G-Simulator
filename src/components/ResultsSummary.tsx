@@ -9,7 +9,11 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { Download } from "lucide-react";
+import { Download, FilePdf } from "lucide-react";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { ResultsPDF } from "@/utils/pdfExport";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface SimulationResult {
   simulationTime: number;
@@ -29,13 +33,88 @@ interface ResultsSummaryProps {
 }
 
 const ResultsSummary = ({ results }: ResultsSummaryProps) => {
+  const [isClient, setIsClient] = useState(false);
+  const { toast } = useToast();
+  
+  // Handle PDF download fallback for SSR
+  useState(() => {
+    setIsClient(true);
+  });
+  
+  const handleExportCSV = () => {
+    // Create CSV content
+    const headers = ['Metric', 'Value'];
+    const rows = [
+      ['Simulation Duration', `${results.simulationTime} seconds`],
+      ['Average Throughput', `${results.avgThroughput.toFixed(2)} Mbps`],
+      ['Maximum Throughput', `${results.maxThroughput.toFixed(2)} Mbps`],
+      ['Average Latency', `${results.avgLatency.toFixed(2)} ms`],
+      ['Minimum Latency', `${results.minLatency.toFixed(2)} ms`],
+      ['Average Packet Loss', `${results.avgPacketLoss.toFixed(3)} %`],
+      ['Spectral Efficiency', `${results.spectralEfficiency.toFixed(2)} bps/Hz`],
+      ['User Equipment Count', `${results.ueCount}`],
+      ['Coverage Estimate', `${results.coverageEstimate.toFixed(1)} %`],
+      ['Energy Efficiency', `${results.energyEfficiency.toFixed(2)} bits/Joule`]
+    ];
+    
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+    
+    // Create and download the file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `5g-simulation-results-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    toast({
+      title: "CSV Export Successful",
+      description: "The simulation results have been exported as CSV."
+    });
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between p-4">
         <CardTitle>Simulation Results</CardTitle>
-        <Button variant="outline" size="sm">
-          <Download className="h-4 w-4 mr-1" /> Export
-        </Button>
+        <div className="flex space-x-2">
+          <Button variant="outline" size="sm" onClick={handleExportCSV}>
+            <Download className="h-4 w-4 mr-1" /> CSV
+          </Button>
+          
+          {isClient && (
+            <PDFDownloadLink 
+              document={<ResultsPDF results={results} />}
+              fileName={`5g-simulation-results-${new Date().toISOString().split('T')[0]}.pdf`}
+              className="inline-flex"
+            >
+              {({ loading, error }) => (
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  disabled={loading}
+                  onClick={() => {
+                    if (!loading && !error) {
+                      toast({
+                        title: "PDF Export Successful",
+                        description: "The simulation results have been exported as PDF."
+                      });
+                    }
+                  }}
+                >
+                  <FilePdf className="h-4 w-4 mr-1" /> 
+                  {loading ? 'Loading...' : 'PDF'}
+                </Button>
+              )}
+            </PDFDownloadLink>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="p-4 pt-0">
         <Table>
