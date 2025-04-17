@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -18,21 +17,20 @@ import {
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800">
-      {/* Hero Section */}
       <section className="py-20 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="flex-1 space-y-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium">
               <Zap className="w-4 h-4 mr-2" />
-              Next-Gen Networking Technology
+              5G Network Performance Research
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Advanced 5G Network <br />
+              5G Network <br />
               <span className="text-gradient">Simulation Platform</span>
             </h1>
             <p className="text-slate-300 text-lg md:text-xl max-w-2xl">
-              Model, simulate, and analyze 5G network performance with our powerful,
-              interactive visualization platform designed for researchers and engineers.
+              Advanced simulation and analysis tool for telecommunications researchers, 
+              engineers, and innovators to model and optimize 5G network performance.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -74,7 +72,6 @@ const LandingPage = () => {
         </div>
       </section>
       
-      {/* Features Section */}
       <section id="features" className="py-20 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Powerful Simulation Features</h2>
@@ -125,7 +122,6 @@ const LandingPage = () => {
         </div>
       </section>
       
-      {/* Use Cases Section */}
       <section className="py-20 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Applications & Use Cases</h2>
@@ -210,7 +206,6 @@ const LandingPage = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className="py-20 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="bg-gradient-to-br from-accent to-accent/50 rounded-2xl p-8 md:p-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
@@ -229,7 +224,6 @@ const LandingPage = () => {
         </div>
       </section>
       
-      {/* Footer */}
       <footer className="py-12 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto border-t border-white/10">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-6 md:mb-0">
