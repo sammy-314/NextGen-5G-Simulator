@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Save, Share, RefreshCw, Rocket } from "lucide-react";
+import { Download, Save, Share, RefreshCw, Rocket, FileText } from "lucide-react";
 import DashboardStats from "@/components/DashboardStats";
 import NetworkEfficiency from "@/components/NetworkEfficiency";
 
@@ -177,7 +177,7 @@ const Index = () => {
             
             <TabsContent value="results" className="mt-6">
               <div className="space-y-6">
-                <ResultsSummary results={simulationResults} />
+                <ResultsSummary results={simulationResults} parameters={parameters} />
               </div>
             </TabsContent>
             
@@ -204,7 +204,7 @@ const Index = () => {
                 onStartStop={handleStartStop}
                 onReset={handleReset}
               />
-              <ResultsSummary results={simulationResults} />
+              <ResultsSummary results={simulationResults} parameters={parameters} />
             </div>
           </div>
           
@@ -237,8 +237,8 @@ const Index = () => {
                     <Share className="h-6 w-6 mb-2" />
                     <span>Share Analysis</span>
                   </Button>
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
-                    <Rocket className="h-6 w-6 mb-2" />
+                  <Button variant="success" className="h-20 flex flex-col" onClick={() => simulationResults && parameters && generatePdfReport(parameters, simulationResults)}>
+                    <FileText className="h-6 w-6 mb-2" />
                     <span>Generate Report</span>
                   </Button>
                 </div>

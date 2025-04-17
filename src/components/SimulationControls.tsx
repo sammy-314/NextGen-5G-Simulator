@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   Card, 
@@ -18,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SimulationParameters } from "@/utils/simulationData";
-import { Play, Pause, RotateCcw, Save } from "lucide-react";
+import { Play, Pause, RotateCcw, Save, FileText } from "lucide-react";
 
 interface SimulationControlsProps {
   parameters: SimulationParameters;
@@ -193,7 +194,7 @@ const SimulationControls = ({
         </div>
         <Button 
           onClick={onStartStop} 
-          className={isRunning ? "bg-red-500 hover:bg-red-600" : "bg-accent hover:bg-accent/90"}
+          variant={isRunning ? "destructive" : "success"}
         >
           {isRunning ? (
             <><Pause className="h-4 w-4 mr-1" /> Stop Simulation</>

@@ -9,7 +9,10 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { Download } from "lucide-react";
+import { Download, FileText } from "lucide-react";
+import { generatePdfReport } from "@/utils/reportGenerator";
+import { useToast } from "@/hooks/use-toast";
+import { SimulationParameters } from "@/utils/simulationData";
 
 interface SimulationResult {
   simulationTime: number;
@@ -26,16 +29,52 @@ interface SimulationResult {
 
 interface ResultsSummaryProps {
   results: SimulationResult;
+  parameters?: SimulationParameters;
 }
 
-const ResultsSummary = ({ results }: ResultsSummaryProps) => {
+const ResultsSummary = ({ results, parameters }: ResultsSummaryProps) => {
+  const { toast } = useToast();
+
+  const handleExport = () => {
+    try {
+      if (!parameters) {
+        toast({
+          title: "Export Failed",
+          description: "Missing simulation parameters for report generation.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const filename = generatePdfReport(parameters, results);
+      
+      toast({
+        title: "Report Generated",
+        description: `Successfully generated ${filename}`,
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast({
+        title: "Export Failed",
+        description: "There was an error generating the PDF report.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between p-4">
         <CardTitle>Simulation Results</CardTitle>
-        <Button variant="outline" size="sm">
-          <Download className="h-4 w-4 mr-1" /> Export
-        </Button>
+        <div className="flex space-x-2">
+          <Button variant="success" size="sm" onClick={handleExport}>
+            <FileText className="h-4 w-4 mr-1" /> Generate PDF
+          </Button>
+          <Button variant="outline" size="sm">
+            <Download className="h-4 w-4 mr-1" /> Export Data
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="p-4 pt-0">
         <Table>
