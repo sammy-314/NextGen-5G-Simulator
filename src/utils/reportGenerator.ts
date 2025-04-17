@@ -17,6 +17,15 @@ interface SimulationResult {
   minLatency: number;
 }
 
+// Extend the jsPDF type to include the lastAutoTable property added by jspdf-autotable
+declare module 'jspdf' {
+  interface jsPDF {
+    lastAutoTable: {
+      finalY: number;
+    };
+  }
+}
+
 export const generatePdfReport = (
   parameters: SimulationParameters, 
   results: SimulationResult,
@@ -107,3 +116,4 @@ export const generatePdfReport = (
   
   return filename;
 };
+

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { 
   generateNetworkTopology, 
@@ -7,6 +8,7 @@ import {
   SimulationParameters,
   defaultSimulationParameters
 } from "@/utils/simulationData";
+import { generatePdfReport } from "@/utils/reportGenerator";
 import Navbar from "@/components/Navbar";
 import NetworkTopology from "@/components/NetworkTopology";
 import SimulationControls from "@/components/SimulationControls";
