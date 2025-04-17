@@ -8,11 +8,13 @@ import { ZoomIn, ZoomOut, RefreshCw } from "lucide-react";
 interface NetworkTopologyProps {
   networkData: NetworkData;
   isLoading?: boolean;
+  className?: string; // Add className prop
 }
 
 const NetworkTopology = ({ 
   networkData,
-  isLoading = false
+  isLoading = false,
+  className = "" // Add default value for className
 }: NetworkTopologyProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [transform, setTransform] = useState({ scale: 1, translateX: 0, translateY: 0 });
@@ -93,7 +95,7 @@ const NetworkTopology = ({
   };
   
   return (
-    <Card className="col-span-2 row-span-2 overflow-hidden">
+    <Card className={`overflow-hidden ${className}`}>
       <CardHeader className="p-4">
         <div className="flex justify-between items-center">
           <CardTitle>Network Topology</CardTitle>

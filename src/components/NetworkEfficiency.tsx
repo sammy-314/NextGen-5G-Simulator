@@ -1,11 +1,10 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MetricsDataPoint, SimulationParameters } from "@/utils/simulationData";
+import { MetricData, SimulationParameters } from "@/utils/simulationData";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 interface NetworkEfficiencyProps {
-  metricsData: MetricsDataPoint[];
+  metricsData: MetricData[];
   parameters: SimulationParameters;
 }
 

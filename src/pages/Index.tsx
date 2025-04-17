@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { 
   generateNetworkTopology, 
@@ -103,7 +102,7 @@ const Index = () => {
     toast({
       title: "Scenario saved",
       description: "Your simulation scenario has been saved successfully.",
-      variant: "success"
+      variant: "default"
     });
   };
   

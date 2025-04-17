@@ -31,11 +31,15 @@ export interface MetricData {
   rsrp: number;
 }
 
+// Added alias for MetricsDataPoint to fix the NetworkEfficiency.tsx error
+export type MetricsDataPoint = MetricData;
+
 export interface SimulationParameters {
   frequency: number;
   bandwidth: number;
   numerology: number;
-  transmitPower: number;
+  // Change from transmitPower to txPower to match DashboardStats.tsx
+  txPower: number;
   nodeCount: number;
   mobilityPattern: string;
   interferenceModel: string;
@@ -49,7 +53,8 @@ export const defaultSimulationParameters: SimulationParameters = {
   frequency: 3.5, // GHz
   bandwidth: 100, // MHz
   numerology: 1, // 0-4
-  transmitPower: 30, // dBm
+  // Update this field from transmitPower to txPower
+  txPower: 30, // dBm
   nodeCount: 10,
   mobilityPattern: 'Random Walk',
   interferenceModel: 'SINR Based',
