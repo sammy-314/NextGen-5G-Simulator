@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Card, 
@@ -101,17 +100,17 @@ const SimulationControls = ({
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="transmitPower">Transmit Power (dBm)</Label>
+              <Label htmlFor="txPower">Transmit Power (dBm)</Label>
               <div className="flex items-center gap-2">
                 <Slider
-                  id="transmitPower"
-                  value={[parameters.transmitPower]}
+                  id="txPower"
+                  value={[parameters.txPower]}
                   min={10}
                   max={46}
                   step={1}
-                  onValueChange={(vals) => handleChange('transmitPower', vals[0])}
+                  onValueChange={(vals) => handleChange('txPower', vals[0])}
                 />
-                <span className="w-12 text-center text-sm">{parameters.transmitPower}</span>
+                <span className="w-12 text-center text-sm">{parameters.txPower}</span>
               </div>
             </div>
             
