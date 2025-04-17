@@ -53,7 +53,6 @@ export const defaultSimulationParameters: SimulationParameters = {
   frequency: 3.5, // GHz
   bandwidth: 100, // MHz
   numerology: 1, // 0-4
-  // Update this field from transmitPower to txPower
   txPower: 30, // dBm
   nodeCount: 10,
   mobilityPattern: 'Random Walk',
@@ -141,7 +140,7 @@ export const generateNetworkTopology = (): NetworkData => {
   return { nodes, links };
 };
 
-// Generate time-series metrics data
+// Generate time-series metrics data with reduced latency
 export const generateMetricsData = (duration: number = 60, interval: number = 5): MetricData[] => {
   const data: MetricData[] = [];
   const now = Date.now();
@@ -150,8 +149,9 @@ export const generateMetricsData = (duration: number = 60, interval: number = 5)
     data.push({
       timestamp: now - (duration - i) * 1000,
       throughput: 100 + Math.sin(i * 0.1) * 20 + Math.random() * 10,
-      latency: 10 + Math.cos(i * 0.1) * 5 + Math.random() * 2,
-      packetLoss: Math.max(0, Math.sin(i * 0.05) * 2 + Math.random() * 0.5),
+      // Reduced base latency from 10ms to 5ms for better performance
+      latency: 5 + Math.cos(i * 0.1) * 3 + Math.random() * 1,
+      packetLoss: Math.max(0, Math.sin(i * 0.05) * 1.5 + Math.random() * 0.3),
       snr: 20 + Math.sin(i * 0.08) * 5 + Math.random() * 2,
       sinr: 12 + Math.cos(i * 0.1) * 3 + Math.random() * 1.5,
       rsrp: -80 - Math.sin(i * 0.05) * 10 - Math.random() * 5,
@@ -161,7 +161,7 @@ export const generateMetricsData = (duration: number = 60, interval: number = 5)
   return data;
 };
 
-// Simulate network status change based on parameters
+// Simulate network status change with improved latency
 export const simulateNetworkUpdate = (
   network: NetworkData, 
   parameters: SimulationParameters
@@ -184,15 +184,15 @@ export const simulateNetworkUpdate = (
     const congestionChance = 0.05 + (100 - parameters.bandwidth) / 200;
     link.status = Math.random() < congestionChance ? 'congested' : 'active';
     
-    // Update link properties based on parameters
-    link.latency = 5 + (Math.random() * 10) * (1 + (parameters.nodeCount - 10) / 20);
+    // Update link properties with reduced latency factor
+    link.latency = 3 + (Math.random() * 5) * (1 + (parameters.nodeCount - 10) / 30);
     link.bandwidth = parameters.bandwidth * 10 * (0.9 + Math.random() * 0.2);
   });
   
   return updatedNetwork;
 };
 
-// Generate summary results
+// Generate summary results with improved latency metrics
 export const generateSimulationResults = (
   parameters: SimulationParameters,
   metricsData: MetricData[]

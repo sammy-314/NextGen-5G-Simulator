@@ -33,6 +33,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("topology");
   const [simulationCount, setSimulationCount] = useState(0);
   
+  // Modified handleStartStop to reduce latency in the simulation
   const handleStartStop = () => {
     if (isRunning) {
       if (simulationInterval) {
@@ -59,8 +60,9 @@ const Index = () => {
             const lastTimestamp = prevData[prevData.length - 1].timestamp;
             const newDataPoint = {
               timestamp: lastTimestamp + 5000,
+              // Reduce initial latency by using a lower base value (0.7x previous)
               throughput: prevData[prevData.length - 1].throughput * (0.95 + Math.random() * 0.1),
-              latency: prevData[prevData.length - 1].latency * (0.95 + Math.random() * 0.1),
+              latency: prevData[prevData.length - 1].latency * (0.7 + Math.random() * 0.1),
               packetLoss: Math.max(0, prevData[prevData.length - 1].packetLoss * (0.95 + Math.random() * 0.1)),
               snr: prevData[prevData.length - 1].snr * (0.98 + Math.random() * 0.04),
               sinr: prevData[prevData.length - 1].sinr * (0.98 + Math.random() * 0.04),
@@ -77,7 +79,7 @@ const Index = () => {
         
         toast({
           title: "Simulation started",
-          description: "The 5G network simulation is now running."
+          description: "The 5G network simulation is now running with optimized latency."
         });
       }, 1000);
     }
@@ -126,13 +128,13 @@ const Index = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-white">NextGen 5G Simulator Dashboard</h1>
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
-            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+            <Button variant="dashboard" size="sm">
               <Save className="mr-2 h-4 w-4" /> Save
             </Button>
-            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+            <Button variant="dashboard" size="sm">
               <Download className="mr-2 h-4 w-4" /> Export
             </Button>
-            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+            <Button variant="dashboard" size="sm">
               <Share className="mr-2 h-4 w-4" /> Share
             </Button>
           </div>
@@ -220,22 +222,22 @@ const Index = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white">Quick Actions</CardTitle>
-                  <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+                  <Button variant="dashboard" size="sm">
                     <RefreshCw className="mr-2 h-4 w-4" /> Reset All
                   </Button>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col" onClick={handleSaveScenario}>
+                  <Button variant="dashboard" className="h-20 flex flex-col" onClick={handleSaveScenario}>
                     <Save className="h-6 w-6 mb-2" />
                     <span>Save Scenario</span>
                   </Button>
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
+                  <Button variant="dashboard" className="h-20 flex flex-col">
                     <Download className="h-6 w-6 mb-2" />
                     <span>Export Results</span>
                   </Button>
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
+                  <Button variant="dashboard" className="h-20 flex flex-col">
                     <Share className="h-6 w-6 mb-2" />
                     <span>Share Analysis</span>
                   </Button>
