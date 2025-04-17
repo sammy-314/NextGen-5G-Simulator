@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,12 @@ import {
   Activity,
   WifiIcon,
   Shield,
-  Users
+  Users,
+  Layers,
+  LineChart,
+  Smartphone,
+  Router,
+  Database
 } from "lucide-react";
 
 const LandingPage = () => {
@@ -22,11 +28,11 @@ const LandingPage = () => {
           <div className="flex-1 space-y-8">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium">
               <Zap className="w-4 h-4 mr-2" />
-              5G Network Performance Research
+              Revolutionary 5G Research Platform
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              5G Network <br />
-              <span className="text-gradient">Simulation Platform</span>
+              NextGen <br />
+              <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-accent to-indigo-500">5G Simulator</span>
             </h1>
             <p className="text-slate-300 text-lg md:text-xl max-w-2xl">
               Advanced simulation and analysis tool for telecommunications researchers, 
@@ -34,15 +40,16 @@ const LandingPage = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+              <Button asChild size="lg" className="bg-gradient-to-r from-accent to-indigo-600 hover:from-accent/90 hover:to-indigo-600/90 border-none">
                 <Link to="/dashboard">
                   Launch Simulator
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
+              <Button asChild variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 group transition-all duration-300">
                 <a href="#features">
                   Explore Features
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
               </Button>
             </div>
@@ -109,9 +116,24 @@ const LandingPage = () => {
               icon: <Shield className="h-8 w-8 text-accent" />,
               title: "Research-Grade Tools",
               description: "Publication-quality data and analysis for academic and industry research applications"
+            },
+            {
+              icon: <LineChart className="h-8 w-8 text-accent" />,
+              title: "Advanced Analytics",
+              description: "Deep insights with machine learning algorithms to predict network behavior and optimize performance"
+            },
+            {
+              icon: <Layers className="h-8 w-8 text-accent" />,
+              title: "Multi-Layer Analysis",
+              description: "Examine interactions between physical, data link, network, and application layers in 5G communications"
+            },
+            {
+              icon: <Database className="h-8 w-8 text-accent" />,
+              title: "Data Export",
+              description: "Export simulation results in multiple formats for further analysis or presentation"
             }
           ].map((feature, index) => (
-            <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all">
+            <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all hover:translate-y-[-5px] duration-300">
               <div className="rounded-lg bg-accent/10 p-3 w-fit mb-4">
                 {feature.icon}
               </div>
@@ -129,10 +151,10 @@ const LandingPage = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-accent/20 to-accent/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-accent/20 to-accent/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 hover:shadow-lg hover:shadow-accent/10 transition-all duration-300">
             <WifiIcon className="h-12 w-12 text-accent mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">Network Planning</h3>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-4 text-slate-300">
               <li className="flex items-start">
                 <div className="mr-2 mt-1 bg-accent/20 rounded-full p-1">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
@@ -151,13 +173,19 @@ const LandingPage = () => {
                 </div>
                 <span>Frequency allocation strategies</span>
               </li>
+              <li className="flex items-start">
+                <div className="mr-2 mt-1 bg-accent/20 rounded-full p-1">
+                  <div className="w-1.5 h-1.5 bg-accent rounded-full"></div>
+                </div>
+                <span>Interference management solutions</span>
+              </li>
             </ul>
           </div>
           
-          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-primary/20 to-primary/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-primary/20 to-primary/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
             <Users className="h-12 w-12 text-primary mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">Academic Research</h3>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-4 text-slate-300">
               <li className="flex items-start">
                 <div className="mr-2 mt-1 bg-primary/20 rounded-full p-1">
                   <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
@@ -176,13 +204,19 @@ const LandingPage = () => {
                 </div>
                 <span>Publication-quality results</span>
               </li>
+              <li className="flex items-start">
+                <div className="mr-2 mt-1 bg-primary/20 rounded-full p-1">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                </div>
+                <span>Cross-technology comparisons</span>
+              </li>
             </ul>
           </div>
           
-          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-graph-cyan/20 to-graph-cyan/5 backdrop-blur-sm border border-white/10 rounded-xl p-8">
+          <div className="col-span-1 lg:col-span-1 bg-gradient-to-br from-graph-cyan/20 to-graph-cyan/5 backdrop-blur-sm border border-white/10 rounded-xl p-8 hover:shadow-lg hover:shadow-graph-cyan/10 transition-all duration-300">
             <Zap className="h-12 w-12 text-graph-cyan mb-4" />
             <h3 className="text-2xl font-bold text-white mb-4">Industry Applications</h3>
-            <ul className="space-y-2 text-slate-300">
+            <ul className="space-y-4 text-slate-300">
               <li className="flex items-start">
                 <div className="mr-2 mt-1 bg-graph-cyan/20 rounded-full p-1">
                   <div className="w-1.5 h-1.5 bg-graph-cyan rounded-full"></div>
@@ -201,23 +235,29 @@ const LandingPage = () => {
                 </div>
                 <span>Cost optimization strategies</span>
               </li>
+              <li className="flex items-start">
+                <div className="mr-2 mt-1 bg-graph-cyan/20 rounded-full p-1">
+                  <div className="w-1.5 h-1.5 bg-graph-cyan rounded-full"></div>
+                </div>
+                <span>ROI analysis for network upgrades</span>
+              </li>
             </ul>
           </div>
         </div>
       </section>
       
       <section className="py-20 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-accent to-accent/50 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-accent to-indigo-600 rounded-2xl p-8 md:p-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/10 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
           <div className="relative z-10 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Simulating?</h2>
             <p className="text-white/80 text-lg max-w-2xl mx-auto mb-8">
-              Launch our powerful 5G network simulator and gain valuable insights into your network design and performance.
+              Launch our powerful NextGen 5G Simulator and gain valuable insights into your network design and performance.
             </p>
-            <Button asChild size="lg" className="bg-white text-accent hover:bg-white/90">
+            <Button asChild size="lg" className="bg-white text-accent hover:bg-white/90 group">
               <Link to="/dashboard">
                 Launch Simulator
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
@@ -229,7 +269,7 @@ const LandingPage = () => {
           <div className="flex items-center mb-6 md:mb-0">
             <WifiIcon className="h-6 w-6 text-accent mr-2" />
             <span className="font-bold text-lg text-white">
-              5G Network <span className="text-accent">Simulator</span>
+              NextGen <span className="text-accent">5G Simulator</span>
             </span>
           </div>
           

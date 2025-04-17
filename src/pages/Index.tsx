@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { 
   generateNetworkTopology, 
@@ -15,6 +16,10 @@ import ResultsSummary from "@/components/ResultsSummary";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, Save, Share, RefreshCw, Rocket } from "lucide-react";
+import DashboardStats from "@/components/DashboardStats";
+import NetworkEfficiency from "@/components/NetworkEfficiency";
 
 const Index = () => {
   const { toast } = useToast();
@@ -25,6 +30,7 @@ const Index = () => {
   const [simulationInterval, setSimulationInterval] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("topology");
+  const [simulationCount, setSimulationCount] = useState(0);
   
   const handleStartStop = () => {
     if (isRunning) {
@@ -44,6 +50,7 @@ const Index = () => {
         const newNetwork = generateNetworkTopology();
         setNetwork(newNetwork);
         setMetricsData(generateMetricsData(60, 5));
+        setSimulationCount(prevCount => prevCount + 1);
         
         const interval = setInterval(() => {
           setNetwork(prevNetwork => simulateNetworkUpdate(prevNetwork, parameters));
@@ -91,6 +98,14 @@ const Index = () => {
       description: "All parameters have been reset to default values."
     });
   };
+
+  const handleSaveScenario = () => {
+    toast({
+      title: "Scenario saved",
+      description: "Your simulation scenario has been saved successfully.",
+      variant: "success"
+    });
+  };
   
   useEffect(() => {
     return () => {
@@ -103,11 +118,26 @@ const Index = () => {
   const simulationResults = generateSimulationResults(parameters, metricsData);
   
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex flex-col">
       <Navbar />
       
       <main className="flex-1 container mx-auto py-6 px-4">
-        <h1 className="text-3xl font-bold mb-6">5G Network Simulation Dashboard</h1>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-white">NextGen 5G Simulator Dashboard</h1>
+          <div className="flex items-center space-x-2 mt-4 md:mt-0">
+            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+              <Save className="mr-2 h-4 w-4" /> Save
+            </Button>
+            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+              <Download className="mr-2 h-4 w-4" /> Export
+            </Button>
+            <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+              <Share className="mr-2 h-4 w-4" /> Share
+            </Button>
+          </div>
+        </div>
+        
+        <DashboardStats simulationCount={simulationCount} isRunning={isRunning} parameters={parameters} />
         
         <div className="block md:hidden mb-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -116,6 +146,7 @@ const Index = () => {
               <TabsTrigger value="controls" className="flex-1">Controls</TabsTrigger>
               <TabsTrigger value="performance" className="flex-1">Metrics</TabsTrigger>
               <TabsTrigger value="results" className="flex-1">Results</TabsTrigger>
+              <TabsTrigger value="efficiency" className="flex-1">Efficiency</TabsTrigger>
             </TabsList>
             
             <TabsContent value="topology" className="mt-6">
@@ -150,14 +181,21 @@ const Index = () => {
                 <ResultsSummary results={simulationResults} />
               </div>
             </TabsContent>
+            
+            <TabsContent value="efficiency" className="mt-6">
+              <div className="space-y-6">
+                <NetworkEfficiency metricsData={metricsData} parameters={parameters} />
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
         
         <div className="hidden md:block">
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <NetworkTopology 
               networkData={network}
               isLoading={isLoading}
+              className="col-span-2 row-span-2"
             />
             <div className="col-span-1 space-y-6">
               <SimulationControls
@@ -171,13 +209,47 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="mt-6">
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
             <PerformanceMetrics metricsData={metricsData} />
+            <NetworkEfficiency metricsData={metricsData} parameters={parameters} />
+          </div>
+          
+          <div className="mt-6">
+            <Card className="bg-white/5 border-white/10">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white">Quick Actions</CardTitle>
+                  <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+                    <RefreshCw className="mr-2 h-4 w-4" /> Reset All
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col" onClick={handleSaveScenario}>
+                    <Save className="h-6 w-6 mb-2" />
+                    <span>Save Scenario</span>
+                  </Button>
+                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
+                    <Download className="h-6 w-6 mb-2" />
+                    <span>Export Results</span>
+                  </Button>
+                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
+                    <Share className="h-6 w-6 mb-2" />
+                    <span>Share Analysis</span>
+                  </Button>
+                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 h-20 flex flex-col">
+                    <Rocket className="h-6 w-6 mb-2" />
+                    <span>Generate Report</span>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
         
-        <div className="mt-10 text-center text-sm text-muted-foreground">
-          <p>5G Network Simulation Platform • Advanced Telecommunications Research</p>
+        <div className="mt-10 text-center text-sm text-white/60">
+          <p>NextGen 5G Simulation Platform • Advanced Telecommunications Research</p>
         </div>
       </main>
     </div>
