@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Card, 
@@ -19,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SimulationParameters } from "@/utils/simulationData";
-import { Play, Pause, RotateCcw, Save, FileText } from "lucide-react";
+import { Play, Pause, RotateCcw } from "lucide-react";
 
 interface SimulationControlsProps {
   parameters: SimulationParameters;
@@ -187,9 +186,6 @@ const SimulationControls = ({
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={onReset}>
             <RotateCcw className="h-4 w-4 mr-1" /> Reset
-          </Button>
-          <Button variant="outline" size="sm">
-            <Save className="h-4 w-4 mr-1" /> Save Config
           </Button>
         </div>
         <Button 

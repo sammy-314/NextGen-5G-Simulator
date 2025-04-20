@@ -46,7 +46,7 @@ const LandingPage = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 group transition-all duration-300">
+              <Button asChild variant="outline" size="lg" className="border-white/20 text-black hover:bg-white/10 group transition-all duration-300">
                 <a href="#features">
                   Explore Features
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

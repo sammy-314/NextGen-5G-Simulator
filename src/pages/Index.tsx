@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { 
   generateNetworkTopology, 
@@ -9,7 +8,6 @@ import {
   defaultSimulationParameters
 } from "@/utils/simulationData";
 import { generatePdfReport } from "@/utils/reportGenerator";
-import Navbar from "@/components/Navbar";
 import NetworkTopology from "@/components/NetworkTopology";
 import SimulationControls from "@/components/SimulationControls";
 import PerformanceMetrics from "@/components/PerformanceMetrics";
@@ -18,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Save, Share, RefreshCw, Rocket, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import DashboardStats from "@/components/DashboardStats";
 import NetworkEfficiency from "@/components/NetworkEfficiency";
 
@@ -101,14 +99,6 @@ const Index = () => {
       description: "All parameters have been reset to default values."
     });
   };
-
-  const handleSaveScenario = () => {
-    toast({
-      title: "Scenario saved",
-      description: "Your simulation scenario has been saved successfully.",
-      variant: "default"
-    });
-  };
   
   useEffect(() => {
     return () => {
@@ -122,21 +112,10 @@ const Index = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex flex-col">
-      <Navbar />
-      
       <main className="flex-1 container mx-auto py-6 px-4">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-white">NextGen 5G Simulator Dashboard</h1>
           <div className="flex items-center space-x-2 mt-4 md:mt-0">
-            <Button variant="dashboard" size="sm">
-              <Save className="mr-2 h-4 w-4" /> Save
-            </Button>
-            <Button variant="dashboard" size="sm">
-              <Download className="mr-2 h-4 w-4" /> Export
-            </Button>
-            <Button variant="dashboard" size="sm">
-              <Share className="mr-2 h-4 w-4" /> Share
-            </Button>
           </div>
         </div>
         
@@ -217,42 +196,9 @@ const Index = () => {
             <NetworkEfficiency metricsData={metricsData} parameters={parameters} />
           </div>
           
-          <div className="mt-6">
-            <Card className="bg-white/5 border-white/10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white">Quick Actions</CardTitle>
-                  <Button variant="dashboard" size="sm">
-                    <RefreshCw className="mr-2 h-4 w-4" /> Reset All
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <Button variant="dashboard" className="h-20 flex flex-col" onClick={handleSaveScenario}>
-                    <Save className="h-6 w-6 mb-2" />
-                    <span>Save Scenario</span>
-                  </Button>
-                  <Button variant="dashboard" className="h-20 flex flex-col">
-                    <Download className="h-6 w-6 mb-2" />
-                    <span>Export Results</span>
-                  </Button>
-                  <Button variant="dashboard" className="h-20 flex flex-col">
-                    <Share className="h-6 w-6 mb-2" />
-                    <span>Share Analysis</span>
-                  </Button>
-                  <Button variant="success" className="h-20 flex flex-col" onClick={() => simulationResults && parameters && generatePdfReport(parameters, simulationResults)}>
-                    <FileText className="h-6 w-6 mb-2" />
-                    <span>Generate Report</span>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="mt-10 text-center text-sm text-white/60">
+            <p>NextGen 5G Simulation Platform • Advanced Telecommunications Research</p>
           </div>
-        </div>
-        
-        <div className="mt-10 text-center text-sm text-white/60">
-          <p>NextGen 5G Simulation Platform • Advanced Telecommunications Research</p>
         </div>
       </main>
     </div>

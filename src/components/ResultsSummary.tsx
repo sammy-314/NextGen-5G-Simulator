@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
@@ -9,7 +8,7 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { Download, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { generatePdfReport } from "@/utils/reportGenerator";
 import { useToast } from "@/hooks/use-toast";
 import { SimulationParameters } from "@/utils/simulationData";
@@ -70,9 +69,6 @@ const ResultsSummary = ({ results, parameters }: ResultsSummaryProps) => {
         <div className="flex space-x-2">
           <Button variant="success" size="sm" onClick={handleExport}>
             <FileText className="h-4 w-4 mr-1" /> Generate PDF
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-1" /> Export Data
           </Button>
         </div>
       </CardHeader>

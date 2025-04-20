@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { NetworkData, Node, Link } from "@/utils/simulationData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -212,30 +211,10 @@ const NetworkTopology = ({
               </div>
               <div className="text-sm">
                 <p>Type: {selectedNode.type}</p>
-                <p>Status: <span className={
-                  selectedNode.status === 'active' ? 'text-green-500' : 
-                  selectedNode.status === 'warning' ? 'text-amber-500' : 
-                  'text-gray-500'
-                }>{selectedNode.status}</span></p>
                 <p>Connections: {selectedNode.connections.length}</p>
               </div>
             </div>
           )}
-          
-          <div className="absolute top-4 right-4 bg-card bg-opacity-80 p-2 rounded text-xs">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-block w-3 h-3 bg-accent rounded-full"></span>
-              <span>Active</span>
-            </div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-block w-3 h-3 bg-amber-500 rounded-full"></span>
-              <span>Warning</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-3 h-3 bg-gray-400 rounded-full"></span>
-              <span>Inactive</span>
-            </div>
-          </div>
         </div>
       </CardContent>
     </Card>
