@@ -1,4 +1,3 @@
-
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { SimulationParameters } from './simulationData';
@@ -37,7 +36,7 @@ export const generatePdfReport = (
   // Add title
   doc.setFontSize(20);
   doc.setTextColor(0, 51, 153);
-  doc.text('NextGen 5G Simulation Report', 105, 15, { align: 'center' });
+  doc.text('5G Network Simulation Report', 105, 15, { align: 'center' });
   
   // Add timestamp
   doc.setFontSize(10);
@@ -98,7 +97,7 @@ export const generatePdfReport = (
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text(
-      'NextGen 5G Simulator - Performance Report',
+      '5G Network Simulator - Performance Report',
       105,
       doc.internal.pageSize.height - 10,
       { align: 'center' }
